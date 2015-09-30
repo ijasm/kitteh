@@ -55,7 +55,7 @@ var Board = React.createClass({
 		var i = 0;
 		return (
 			<div id="board">
-				<h1>{this.state.board.topic}</h1>
+				<h1 className="title">{this.state.board.topic}</h1>
 				<div id="input">
 					<textarea className="input" onChange={this.onInput} value={this.state.newCard}></textarea>
 					<button className="btn btn-primary btnSubmit" onClick={this.addCard}>Submit</button>

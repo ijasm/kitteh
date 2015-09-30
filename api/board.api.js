@@ -15,7 +15,7 @@ module.exports = {
 
 			var component = <Board board={board[0]}/>
 			var markup = React.renderToString(component);
-			res.render('board', { markup: markup, board: "{" + JSON.stringify(board[0]) + "}" });
+			res.render('board', { markup: markup, reactComponent: "<Board board={" + JSON.stringify(board[0]) + "}/>" });
 		});
 	},
 

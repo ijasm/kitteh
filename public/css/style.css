@@ -1,10 +1,11 @@
-h1 {
-    font-size: 3em;
+.title {
+    font-size: 2.8em;
+    margin: 30px 10px;
 }
 
 #input {
     margin: 20px auto;
-    max-width: 80%;
+    max-width: 90%;
     display: flex;
     display: -webkit-flex;
     flex-direction: row;
@@ -19,9 +20,7 @@ h1 {
     font-size: 1.5em;
 }
 
-.btnSubmit {
-    width: 10%;
-}
+.btnSubmit {}
 
 #board {
     padding: 10px 20px;
@@ -29,7 +28,7 @@ h1 {
 
 #cards {
     margin: 10px auto;
-    max-width: 80%;
+    width: 90%;
 }
 
 .card {
