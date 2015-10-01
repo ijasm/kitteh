@@ -3,17 +3,27 @@
 var _ = require('lodash');
 var board = require('../models/board.model');
 var React = require('react');
-var Board = require('../public/react/board.jsx')
+var Board = require('../public/react/board.jsx');
+var User = require('../public/react/user.jsx');
 
 module.exports = {
-	index: function(req, res) {
+	// just housing this here for the time being, because i can
+	blah: function(req, res) {
 		board.find({}, function(err, board) {
 
 			board[0].cards.sort(function(a, b) {
 				return new Date(b.createdOn) - new Date(a.createdOn);
 			});
 
-			var component = <Board board={board[0]}/>
+			var component = <User board={board[0]}/>;
+			var markup = React.renderToString(component);
+			res.render('board', { markup: markup, reactComponent: "<User board={" + JSON.stringify(board[0]) + "}/>" });
+		});
+	},
+
+	index: function(req, res) {
+		board.find({}, function(err, board) {
+			var component = <Board board={board[0]}/>;
 			var markup = React.renderToString(component);
 			res.render('board', { markup: markup, reactComponent: "<Board board={" + JSON.stringify(board[0]) + "}/>" });
 		});

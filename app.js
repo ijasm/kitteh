@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/', require('./routes/board.route'));
 app.use('/board', require('./routes/board.route'));
+app.get('/', require('./api/board.api').blah);
 
 var server = require('http').createServer(app).listen(3000, function() {
 	console.log('Server started: http://localhost:3000/');

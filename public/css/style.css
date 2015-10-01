@@ -22,7 +22,7 @@
 
 .btnSubmit {}
 
-#board {
+#user, #board {
     padding: 10px 20px;
 }
 
@@ -31,7 +31,7 @@
     width: 90%;
 }
 
-.card {
+#user .card {
     font-size: 1.5em;
     margin: 10px 0;
 	width: 100%;
@@ -44,9 +44,42 @@
     background-color: #CCC;
     padding: 10px;
     border-radius: 5px;
-
 }
 
-.card .text {
 
+#cards {
+    margin: 10px auto;
+    width: 90%;
+}
+
+.card {
+    font-size: 1.5em;
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    padding: 10px;
+}
+
+#user .card {
+    background-color: #CCC;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+
+#board .card {
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    border-radius: 4px;
+}
+
+#board .card .bar {
+    width: 100%;
+    height: 10px;
+    background-color: #CCC;
+    border-radius: 2px;
+}
+
+.card .txtLikes {
+    font-size: 0.8em;
 }

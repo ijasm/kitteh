@@ -1,7 +1,7 @@
 var isBrowser = (typeof module === 'undefined');
 var React = isBrowser ? window.React : require('react');
 
-var Card = React.createClass({
+var UserCard = React.createClass({
 	render: function() {
 		return (
 			<div className="card" onClick={this.props.onAddLike}>
@@ -14,5 +14,5 @@ var Card = React.createClass({
 
 
 if(!isBrowser) {
-	module.exports = Card;
+	module.exports = UserCard;
 }
