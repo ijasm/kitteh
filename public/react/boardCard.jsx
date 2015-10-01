@@ -4,11 +4,9 @@ var React = isBrowser ? window.React : require('react');
 var BoardCard = React.createClass({
 	getBarWidth: function() {
 		var width = this.props.data.likes;
-
 		if(this.props.mostLikes > 100) {
 			width /= this.props.mostLikes;	
 		}
-
 		return width.toString() + "%";
 	},
 

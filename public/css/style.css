@@ -83,3 +83,8 @@
 .card .txtLikes {
     font-size: 0.8em;
 }
+
+.card button {
+    border: none;
+    background-color: transparent;
+}
