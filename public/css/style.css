@@ -88,3 +88,7 @@
     border: none;
     background-color: transparent;
 }
+
+.card button:focus {
+    outline: 0;
+}

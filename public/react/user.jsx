@@ -10,10 +10,13 @@ if(isBrowser) {
 
 var User = React.createClass({
 	getInitialState: function() {
-		return { board: this.props.board, newCard: "" };
+		return { board: this.props.board, newCard: "", likedCards: [] };
 	},
 
 	componentDidMount: function() {
+		this.state.likedCards = this.getLikedCardsFromCookie();
+		this.setState(this.state);
+
 		var that = this;
 		this.socket = io();
 		this.socket.on('update board', function(board) {
@@ -28,8 +31,28 @@ var User = React.createClass({
 	},
 
 	addLike: function(index) {
+		this.addCardToCookie(this.state.board.cards[index]._id);
 		this.state.board.cards[index].likes++;
 		this.updateBoard();
+	},
+
+	addCardToCookie: function(cardId) {
+		this.state.likedCards.push(cardId);
+		document.cookie = "likedCards=" + JSON.stringify(this.state.likedCards);
+	},
+
+	getLikedCardsFromCookie: function() {
+		if(isBrowser) {
+			var cookies = document.cookie.split(';');
+			for(var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].split('=');
+
+				if(cookie[0] == "likedCards") {
+					return JSON.parse(cookie[1]);
+				}
+			}
+		}
+		return [];
 	},
 
 	updateBoard: function() {
@@ -44,11 +67,11 @@ var User = React.createClass({
 	},
 
 	onBoardUpdated: function(board) {
-		this.setState({ board: board, newCard: this.state.newCard });
+		this.setState({ board: board, newCard: this.state.newCard, likedCards: this.state.likedCards });
 	},
 
 	onInput: function(evt) {
-		this.setState({ board: this.state.board, newCard: evt.target.value});
+		this.setState({ board: this.state.board, newCard: evt.target.value, likedCards: this.state.likedCards });
 	},
 
 	render: function() {
@@ -62,7 +85,7 @@ var User = React.createClass({
 				</div>
 				<div id="cards">
 					{ this.state.board.cards.map(function(result) {
-						return <UserCard key={i++} data={result} onAddLike={this.addLike.bind(null, i-1)}/>;
+						return <UserCard key={i++} data={result} onAddLike={this.addLike.bind(null, i-1)} liked={this.state.likedCards.indexOf(result._id) != -1}/>;
 					  }.bind(this))
 					}
 				</div>
