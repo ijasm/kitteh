@@ -36,20 +36,29 @@ var User = React.createClass({
 		this.updateBoard();
 	},
 
+	removeLike: function(index) {
+		this.removeCardFromCookie(this.state.board.cards[index]._id);
+		this.state.board.cards[index].likes--;
+		this.updateBoard();
+	},
+
 	addCardToCookie: function(cardId) {
 		this.state.likedCards.push(cardId);
 		document.cookie = "likedCards=" + JSON.stringify(this.state.likedCards);
 	},
 
-	getLikedCardsFromCookie: function() {
-		if(isBrowser) {
-			var cookies = document.cookie.split(';');
-			for(var i = 0; i < cookies.length; i++) {
-				var cookie = cookies[i].split('=');
+	removeCardFromCookie: function(cardId) {
+		this.state.likedCards.splice(this.state.likedCards.indexOf(cardId), 1);
+		document.cookie = "likedCards=" + JSON.stringify(this.state.likedCards);
+	},
 
-				if(cookie[0] == "likedCards") {
-					return JSON.parse(cookie[1]);
-				}
+	getLikedCardsFromCookie: function() {
+		var cookies = document.cookie.split(';');
+		for(var i = 0; i < cookies.length; i++) {
+			var cookie = cookies[i].split('=');
+
+			if(cookie[0] == "likedCards") {
+				return JSON.parse(cookie[1]);
 			}
 		}
 		return [];
@@ -85,7 +94,7 @@ var User = React.createClass({
 				</div>
 				<div id="cards">
 					{ this.state.board.cards.map(function(result) {
-						return <UserCard key={i++} data={result} onAddLike={this.addLike.bind(null, i-1)} liked={this.state.likedCards.indexOf(result._id) != -1}/>;
+						return <UserCard key={i++} data={result} onLike={this.addLike.bind(null, i-1)} onRemoveLike={this.removeLike.bind(null, i-1)} liked={this.state.likedCards.indexOf(result._id) != -1}/>;
 					  }.bind(this))
 					}
 				</div>
