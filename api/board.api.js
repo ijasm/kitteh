@@ -4,11 +4,12 @@ var _ = require('lodash');
 var board = require('../models/board.model');
 var React = require('react');
 var Board = require('../public/react/board.jsx');
+var Boards = require('../public/react/boards.jsx');
 var User = require('../public/react/user.jsx');
 
 module.exports = {
 	// just housing this here for the time being, because i can
-	blah: function(req, res) {
+	user: function(req, res) {
 		board.find({}, function(err, board) {
 
 			board[0].cards.sort(function(a, b) {
@@ -22,18 +23,32 @@ module.exports = {
 	},
 
 	index: function(req, res) {
-		board.find({}, function(err, board) {
-			var component = <Board board={board[0]}/>;
+		board.find({}, function(err, boards) {
+			var component = <Boards boards={boards}/>;
 			var markup = React.renderToString(component);
-			res.render('board', { markup: markup, reactComponent: "<Board board={" + JSON.stringify(board[0]) + "}/>" });
+			res.render('board', { markup: markup, reactComponent: "<Boards boards={" + JSON.stringify(boards) + "}/>" });
 		});
 	},
 
 	create: function(req, res) {},
-	read: function(req, res) {},
+
+	read: function(req, res) {
+		board.findById(req.params.id, function(err, result) {
+			if(err) {
+				return; // handle error
+			} 
+
+			if(!result) {
+				return res.sendStatus(404);
+			}
+
+			var component = <Board board={result}/>;
+			var markup = React.renderToString(component);
+			res.render('board', { markup: markup, reactComponent: "<Board board={" + JSON.stringify(result) + "}/>" });
+		});
+	},
 
 	update: function(req, res) {
-
 		board.findById(req.params.id, function(err, results) {
 			if(err) {
 				return; // handle error

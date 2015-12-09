@@ -92,3 +92,21 @@
 .card button:focus {
     outline: 0;
 }
+
+#boards {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+.board {
+    width: 180px;
+    height: 120px;
+    background-color: #CCC;
+    padding: 10px;
+    margin: 0 10px 10px 10px;
+    border-radius: 10px;
+}
