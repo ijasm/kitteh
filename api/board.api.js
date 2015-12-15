@@ -30,12 +30,31 @@ module.exports = {
 		});
 	},
 
-	create: function(req, res) {},
+	create: function(req, res) {
+		board.create(req.body, function(err, newBoard) {
+			if(err) {
+				console.log(err);
+				return; //handle error
+			}
+
+			board.find({}, function(err, boards) {
+				if(err) {
+					console.log(err);
+					return;
+				}
+
+				return res.status(201).json({ 
+					boards: boards, 
+					newBoard: newBoard
+				});
+			});
+		});
+	},
 
 	read: function(req, res) {
 		board.findById(req.params.id, function(err, result) {
 			if(err) {
-				return; // handle error
+				return; //handle error
 			} 
 
 			if(!result) {
@@ -58,14 +77,6 @@ module.exports = {
 				return res.sendStatus(404);
 			}
 
-			// console.log("Updating card...");
-
-			// console.log("Before update: ");
-			// console.log(results);
-
-			// console.log("Updates: ");
-			// console.log(req.body);
-
 			_.extend(results, req.body);
 
 			console.log("Updated card:");
@@ -73,7 +84,7 @@ module.exports = {
 
 			results.save(function (err) {
     			if(err) {
-    				// handle error
+    				//handle error
     				console.log("id: " + req.params.id);
     				console.log(req.body);
     				console.log(err);
